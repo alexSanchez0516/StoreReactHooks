@@ -1,0 +1,99 @@
+.cart__count {
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: 700;
+  position: relative;
+  right: 5px;
+  padding: .2rem;
+}
+
+main {
+  margin: 0 auto;
+}
+
+.card__produts {
+  transition: transform 0.3s ease;
+}
+.card__produts:hover {
+  transform: scale(0.9);
+}
+
+
+#myRange {
+  width: 100%;
+}
+
+#myRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#myRange::-webkit-slider-thumb:hover {
+  background-color: #555;
+}
+
+#tickmarks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#tickmarks option {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background-color: #000;
+  transform-origin: left;
+}
+
+#tickmarks option:before {
+  content: attr(label);
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+  font-size: 12px;
+}
+
+#myRange::-webkit-slider-thumb {
+  z-index: 2;
+}
+
+#tickmarks option:last-child {
+  flex: 0;
+}
+
+
+.cart__shop {
+  opacity: 1;
+  position: fixed !important;
+  right: 0 !important;
+  top: 58px !important;
+  scroll-behavior: smooth !important;
+  overflow: scroll !important;
+  margin: 2rem !important;
+  padding: 2rem !important;
+   display: flex !important;
+  flex-direction: column !important; 
+  border: solic 3px solid !important;
+  background-color: #ffffff !important;
+  box-shadow: 2px 2px 2px 2px #ccc !important;
+  border-radius: 1em !important;
+}
+
+
+
+
+
+
+
+
+
