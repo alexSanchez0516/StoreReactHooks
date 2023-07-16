@@ -1,7 +1,8 @@
-export const Button = ({text}) => {
+export const Button = ({text, handle}) => {
   return (
     <button
       type="button"
+      onClick={handle}
       className="inline-flex items-center px-4 py-2 my-2
                 bg-gray-900 dark:bg-cyan-900 border border-transparent rounded-md
                   font-semibold text-xs text-white mx-2 uppercase tracking-widest hover:bg-cyan-800 dark:hover:cyan-300

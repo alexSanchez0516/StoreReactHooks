@@ -1,24 +1,62 @@
-import { ShoppingCartIcon } from "@heroicons/react/24/solid";
-import { ProductItemCartShop } from "./ProductItemCartShop";
-import { Button } from "./Button";
+import { CartIcon, ClearCartIcon } from "./Icons.jsx";
+import { useId } from "react";
+import { useCartProducts } from "../hooks/useCartProducts.js";
+import './Cart.css'
 
-export const Cart = ({cartShop, totalMoneyCartShop}) => {
+
+function CartItem ({ thumbnail, price, title, quantity, addToCart,removeFromCart }) {
   return (
-    <div className="cart__shop">
-      <hr style={{ backgroundColor: "red" }} />
-
-      {cartShop.map((itemCart, index) => {
-        return <ProductItemCartShop itemCart={itemCart} />
-      })}
-      <div className="mt-4 flex flex-col items-center">
-        <span className="text-center">
-          TOTAL:{" "}
-          <span className="underline cursor-pointer">{totalMoneyCartShop}</span>
-        </span>
-        <Button text={'Ver la cesta'}>
-          <ShoppingCartIcon className="h-6 text-white" />
-        </Button>        
+    <li>
+      <img
+        src={thumbnail}
+        alt={title}
+      />
+      <div>
+        <strong>{title}</strong> - ${price}
       </div>
-    </div>
+
+      <footer>
+        <small>
+          Qty: {quantity}
+        </small>
+        <button onClick={addToCart}>+</button>
+        <button onClick={removeFromCart}>-</button>
+
+      </footer>
+    </li>
+  )
+}
+
+
+
+export const Cart = () => {
+  const cartCheckboxId = useId();
+  const { addToCart, cart, removeFromCart, clearCart } = useCartProducts();
+  
+
+  return (
+    <>
+      <label className="cart-button" htmlFor={cartCheckboxId}>
+        <CartIcon />
+      </label>
+      <input id={cartCheckboxId} type="checkbox" hidden />
+
+      <aside className="cart">
+        <ul>
+          {cart.map((product) => (
+            <CartItem
+              key={product.id}
+              addToCart={() => addToCart(product)}
+              removeFromCart={() => removeFromCart(product)}
+              {...product}
+            />
+          ))}
+        </ul>
+
+        <button onClick={clearCart}>
+          <ClearCartIcon />
+        </button>
+      </aside>
+    </>
   );
 };

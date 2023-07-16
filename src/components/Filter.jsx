@@ -1,61 +1,69 @@
+import { useId } from "react";
+import { useFilterProducts } from "../hooks/useFilterProducts";
 import { Button } from "./Button";
+import { Label } from "./Label";
+import { Input } from "./Input";
+import { Select } from "./Select";
 
-export const Filter = ({query, handleChangeQuery, handleChangeCategory, categorys, handleChangeRange, handleSortPrice,currentMinRange, handleSortName ,sortedName , sortedPrice}) => {
+export const Filters = ({categories}) => {
+
+  const { filters, setFilters } = useFilterProducts();
+  const minPriceFilterId = useId();
+  const categoryFilterId = useId();
+  const queryFilterId = useId();
+
+  const handleChangeCategory = (event) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      category: event.target.value
+    }));
+  };
+
+  const handleChangeQuery = (event) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      query: event.target.value
+    }));
+  };
+
+  // Actualiza el state de filters, copiando su estado anterior y modificando el que corresponde
+  const handleChangeMinPrice = (event) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      price: event.target.value
+    }));
+  };
+  
   return (
     <header className="flex justify-center my-4">
       <form className="flex flex-col">
         <div className="flex flex-col gap-2">
+          
           <div className="flex items-center">
-            <label className="uppercase mx-2 text-sm" htmlFor="query">
-              Producto
-            </label>
-            <input
-              type="text"
-              name="query"
-              value={query}
-              className="bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md shadow-sm"
-              onChange={handleChangeQuery}
-            />
+           <Label text={'Producto'} forInput={'query'} />
+           <Input handleChange={handleChangeQuery} 
+           id={queryFilterId} name={'query'} value={filters.query} type={'text'} />
           </div>
+
           <div className="flex items-center">
-            <label htmlFor="category" className="uppercase mx-2 text-sm">
-              Categoria
-            </label>
-            <select
-              className="p-1 my-1 w-full bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md shadow-sm"
-              name="category"
-              id="category"
-              onChange={handleChangeCategory}
-            >
-              <option className="text-sm" defaultChecked></option>
-              {categorys.map((category, index) => {
-                return (
-                  <option className="text-sm" key={index}>
-                    {category}
-                  </option>
-                );
-              })}
-            </select>
+           <Label text={'Categoria'} forInput={'category'} />
+           <Select options={categories} 
+                   handleChange={handleChangeCategory}
+                   id={categoryFilterId}
+                   name={'category'} />
           </div>
+
           <div className="flex items-center mx-2 justify-between">
-            <label
-              htmlFor="rangePrice"
-              className="uppercase mx-2 text-sm text-end"
-            >
-              Precio
-            </label>
-            <input
-              type="range"
-              name="rangePrice"
-              value={currentMinRange}
-              min={10}
-              step={10}
-              max={999}
-              onChange={handleChangeRange}
-            />
-            <label htmlFor="rangePrice">{currentMinRange}</label>
+            <Label text={'Precio'} forInput={minPriceFilterId} />
+            <Input handleChange={handleChangeMinPrice} 
+                  id={minPriceFilterId} name={'rangePrice'} 
+                  max={1400} min={10} step={10} 
+                 type={'range'} value={filters.price} />
+
+            <Label text={filters.price} forInput={minPriceFilterId} />
           </div>
-          <div className="flex gap-2 flex-col">
+
+          {/* <div className="flex gap-2 flex-col">
             <div className="flex gap-2 ">
               <label htmlFor="sortedPrice">Ordenar por precio</label>
               <input
@@ -76,7 +84,7 @@ export const Filter = ({query, handleChangeQuery, handleChangeCategory, category
                 id="sortedName"
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <Button text={'Buscar'} />
       </form>
